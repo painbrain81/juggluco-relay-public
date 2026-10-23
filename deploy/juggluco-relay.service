@@ -1,0 +1,33 @@
+[Unit]
+Description=Juggluco relay (.NET) - receives from the source phone and forwards to the others
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=juggluco
+Group=juggluco
+WorkingDirectory=/opt/juggluco-relay
+ExecStart=/opt/juggluco-relay/JugglucoRelay
+Restart=always
+RestartSec=2
+# Creates /var/lib/juggluco-relay owned by the service user
+StateDirectory=juggluco-relay
+StateDirectoryMode=0700
+UMask=0027
+
+# Hardening: writes only to its own data folder. If StreamExport.Path points elsewhere, add that
+# folder here (a leading "-" keeps the service starting when the folder doesn't exist).
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/lib/juggluco-relay
+
+# Memory cap: abuse restarts the relay instead of starving the rest of the server.
+# The .NET GC reads the limit and keeps the heap under 75%; in normal use the relay stays below 100 MB.
+MemoryHigh=384M
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

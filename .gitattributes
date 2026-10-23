@@ -1,0 +1,5 @@
+* text=auto
+# Copied to the server: Unix line endings
+*.sh text eol=lf
+*.service text eol=lf
+deploy/appsettings.server.json text eol=lf

@@ -1,0 +1,9 @@
+bin/
+obj/
+publish/
+.vs/
+.vscode/
+*.user
+__pycache__/
+# Data written when running the relay locally
+src/JugglucoRelay/data/
